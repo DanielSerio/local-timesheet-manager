@@ -1,0 +1,9 @@
+import z from "zod";
+
+const nameSchema = z.string().trim().min(1).max(64);
+
+export class SubcategoryValidator {
+  static create = z.object({
+    name: nameSchema,
+  });
+}

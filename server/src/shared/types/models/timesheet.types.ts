@@ -1,5 +1,5 @@
 import type { ComputedTimesheetLine, TimesheetLine } from "./timesheet-line.types";
-import type { Pretty } from "./utility.types";
+import type { Pretty } from "../utility.types";
 
 interface TimesheetCreateBasis {
   name?: string;
