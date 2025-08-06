@@ -65,7 +65,7 @@ function EntitySearchComponent<Type extends Category | Subcategory>(
           variant="outline"
           role="combobox"
           aria-expanded={isOpen}
-          className="w-[200px] justify-between"
+          className="w-full justify-between"
         >
           {selected
             ? getOptionLabel(selected)
@@ -75,7 +75,7 @@ function EntitySearchComponent<Type extends Category | Subcategory>(
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-full p-0">
         <Command
           filter={(value, search) => {
             const found = findOption(+value);
