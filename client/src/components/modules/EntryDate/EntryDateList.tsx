@@ -1,6 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import type { EntryDateListProps } from "./EntryDateList.props";
 import type { PropsWithChildren } from "react";
+import { ApiTable } from "@/components/table";
+import { IDCell } from "@/components/table/cell/IDCell";
+import { CountCell } from "@/components/table/cell/CountCell";
 
 const ListLink = ({
   children,
@@ -21,21 +24,31 @@ const getDateLink =
 
 export function EntryDateList({ query }: EntryDateListProps) {
   return (
-    <>
-      {query.isLoading && <p>Loading...</p>}
-      {!query.isLoading && !!query.isError && <p>query.error.message</p>}
-      {!query.isLoading &&
-        query.data?.records.length &&
-        query.data!.records.map(({ count, entryDate }) => {
-          const DateLink = getDateLink(entryDate);
+    <ApiTable
+      isLoading={query.isLoading}
+      data={query.data}
+      error={query.error}
+      columns={[
+        {
+          id: "date",
+          header: "Date",
+          size: 120,
+          accessorKey: "entryDate",
+          cell(props) {
+            const entryDate = props.getValue() as string | Date;
+            const DateLink = getDateLink(entryDate);
 
-          return (
-            <div className="flex justify-between" key={`${entryDate}`}>
-              <DateLink>{`${entryDate}`}</DateLink>
-              <DateLink>({count})</DateLink>
-            </div>
-          );
-        })}
-    </>
+            return <DateLink>{`${entryDate}`}</DateLink>;
+          },
+        },
+        {
+          id: "count",
+          header: "Timesheets",
+          accessorKey: "count",
+          size: 60,
+          cell: CountCell,
+        },
+      ]}
+    />
   );
 }

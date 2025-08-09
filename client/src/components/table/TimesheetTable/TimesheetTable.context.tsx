@@ -10,7 +10,7 @@ import { COLUMNS } from "./columns";
 import { useTimesheetForm } from "@/hooks/useTimesheetForm";
 import { useTimesheet } from "@/hooks/useTimesheet";
 
-function calculateGridTemplateColumns(
+export function calculateGridTemplateColumns(
   columns: TimesheetTableColumnDef<keyof TimesheetRow>[]
 ) {
   const total = columns.reduce((sum, column) => sum + column.size, 0);

@@ -58,6 +58,7 @@
   --accent: oklch(0.967 0.001 286.375);
   --accent-foreground: oklch(0.21 0.006 285.885);
   --destructive: oklch(0.577 0.245 27.325);
+  --destructive-opacity: oklch(58.305% 0.23863 28.392 / 0.04);
   --border: oklch(0.92 0.004 286.32);
   --input: oklch(0.92 0.004 286.32);
   --ring: oklch(0.705 0.213 47.604);
@@ -92,6 +93,7 @@
   --accent: oklch(0.274 0.006 286.033);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
+  --destructive-opacity:oklch(70.216% 0.18922 22.207 / 0.04);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.646 0.222 41.116);
@@ -117,6 +119,18 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.alert-destructive {
+  background: var(--destructive-opacity);
+  color: var(--destructive);
+  border-color: var(--destructive-opacity);
+}
+
+.alert-subtle {
+  background: transparent;
+  color: var(--muted-foreground);
+  border-color: transparent;
 }
 
 @import './timesheet-table.css'
