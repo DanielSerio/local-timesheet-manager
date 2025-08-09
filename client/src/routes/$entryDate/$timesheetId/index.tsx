@@ -1,3 +1,4 @@
+import { Page, PageHeader } from "@/components/layout";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/$entryDate/$timesheetId/")({
@@ -5,5 +6,10 @@ export const Route = createFileRoute("/$entryDate/$timesheetId/")({
 });
 
 function RouteComponent() {
-  return <div>Hello "/[entry_date]/[timesheet_id]/"!</div>;
+  return (
+    <Page>
+      <PageHeader />
+      <div>Hello "/$entryDate/$timesheetId"!</div>
+    </Page>
+  );
 }
