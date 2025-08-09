@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Frame, Page } from "./components/layout";
+import { Frame, Page, PageHeader } from "./components/layout";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -14,7 +14,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Frame headerHeight={48}>
         <Page>
-          <p>Home</p>
+          <PageHeader />
         </Page>
       </Frame>
     </QueryClientProvider>
