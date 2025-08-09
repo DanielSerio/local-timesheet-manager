@@ -51,7 +51,7 @@ export function PageHeader() {
         <BreadcrumbList>
           <BreadcrumbItem className="py-1">
             <BreadcrumbLink asChild>
-              <Link to="/">Dates</Link>
+              <Link to="/">Collections</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           {state.map(({ name, id }) => (
