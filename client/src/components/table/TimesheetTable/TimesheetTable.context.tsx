@@ -42,7 +42,7 @@ function useTimesheetTableState({
   });
   const timesheetQuery = useTimesheet(timesheetId);
 
-  const form = useTimesheetForm();
+  const form = useTimesheetForm(timesheetQuery.data);
 
   useEffect(() => {
     if (typeof defaultIsReadOnly === "boolean") {

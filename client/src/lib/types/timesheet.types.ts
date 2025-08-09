@@ -1,4 +1,4 @@
-import type { ComputedTimesheetLine, TimesheetLine } from "./timesheet-line.types";
+import type { ComputedTimesheetLine, TimesheetLine, TimesheetLineCreate } from "./timesheet-line.types";
 import type { Pretty } from "./utility.types";
 
 interface TimesheetCreateBasis {
@@ -14,7 +14,7 @@ interface TimesheetBasis extends TimesheetCreateBasis {
   name: string;
   date: Date;
 
-  Lines?: (TimesheetLine | ComputedTimesheetLine)[];
+  Lines?: (TimesheetLine | ComputedTimesheetLine | TimesheetLineCreate)[];
 }
 
 export type Timesheet = Pretty<TimesheetBasis>;

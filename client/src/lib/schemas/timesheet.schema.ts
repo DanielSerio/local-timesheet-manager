@@ -30,7 +30,7 @@ const getTimeValidator = (path?: PropertyKey[]) => z.string().superRefine((value
 export const TimesheetLineSchema = z.object({
   id: optionalId,
   categoryId: z.coerce.number<number>().int().positive(),
-  subcategoryId: z.coerce.number<number>().int().positive(),
+  subcategoryId: z.coerce.number<number>().int().positive().nullable(),
   startTime: getTimeValidator(['startTime']),
   endTime: getTimeValidator(['startTime']),
   note: z.string().trim().nullable(),
@@ -39,6 +39,6 @@ export const TimesheetLineSchema = z.object({
 export const TimesheetSchema = z.object({
   id: optionalId,
   name: z.string().trim().min(1).max(64),
-  date: z.iso.date(),
-  Lines: z.array(TimesheetLineSchema)
+  date: z.coerce.date(),
+  Lines: z.array(TimesheetLineSchema).optional()
 });

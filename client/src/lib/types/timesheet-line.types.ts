@@ -6,8 +6,8 @@ interface TimesheetLineCreateBasis {
   timesheetId?: number;
   categoryId: number;
   subcategoryId: number | null;
-  startTime: Date | string;
-  endTime: Date | string;
+  startTime: string;
+  endTime: string;
   note: string | null;
 }
 

@@ -24,5 +24,13 @@ type Story = StoryObj<typeof meta>;
 
 export const NormalTimesheetTable: Story = {
   name: 'TimesheetTable',
+  args: {
+    timesheetId: -1
+  },
+};
+
+
+export const CreateTimesheetTable: Story = {
+  name: 'TimesheetTable - Create',
   args: {},
 };
