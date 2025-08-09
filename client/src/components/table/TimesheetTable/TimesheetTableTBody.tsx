@@ -8,7 +8,7 @@ import { GridNavigation } from "@/components/keyboard/GridNavigation/GridNavigat
 import { differenceInMinutes } from "date-fns";
 import { useFieldArray, useWatch } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import type { LineTimes } from "./TimesheetTable.props";
 
 type BaseType = object & { startTime: string; endTime: string };
@@ -70,7 +70,15 @@ export function TimesheetTableTBody() {
     name: "Lines",
   });
   const lineTimes = useLineTimes(form.control);
-  //TODO: Focus first select of new row when adding timesheet rows
+
+  if (lines.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center">
+        <em className="not-italic text-2xl my-8 text-gray-500">No Entries</em>
+      </div>
+    );
+  }
+
   return (
     <>
       <GridNavigation>
