@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { EntitySearch } from "./Entitysearch";
+import { EntitySearch } from "./EntitySearch";
 import { expect, fn } from "storybook/internal/test";
 import type { Category } from "@/lib/types/category.types";
 
