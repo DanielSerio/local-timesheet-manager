@@ -11,7 +11,7 @@ const ListLink = ({
 }: PropsWithChildren<{ entryDate: Date | string; timesheetId: string }>) => {
   return (
     <Link
-      to="/$entryDate/$timesheetId"
+      to="/timesheets/$entryDate/$timesheetId"
       params={{ entryDate: `${entryDate}`, timesheetId }}
     >
       {children}

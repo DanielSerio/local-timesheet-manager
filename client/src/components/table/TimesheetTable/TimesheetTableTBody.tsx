@@ -55,6 +55,7 @@ export function TimesheetTableTBody() {
     {
       form,
       isReadOnly,
+      isCreateMode,
       grouping,
       categoriesQuery,
       subcategoriesQuery,
@@ -71,7 +72,7 @@ export function TimesheetTableTBody() {
   });
   const lineTimes = useLineTimes(form.control);
 
-  if (lines.length === 0) {
+  if (lines.length === 0 && !isCreateMode) {
     return (
       <div className="flex flex-col items-center justify-center">
         <em className="not-italic text-2xl my-8 text-gray-500">No Entries</em>

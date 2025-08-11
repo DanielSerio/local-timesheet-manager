@@ -32,6 +32,7 @@ export interface TimesheetTableProps
   extends AreaHTMLAttributes<HTMLAreaElement> {
   timesheetId?: number;
   isReadOnly?: boolean;
+  isCreateMode?: boolean;
   grouping?: TimesheetTableGrouping;
   lines?: (TimesheetLineCreate | TimesheetLine)[];
 }

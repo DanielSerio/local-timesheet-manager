@@ -10,73 +10,78 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as EntryDateIndexRouteImport } from './routes/$entryDate/index'
-import { Route as EntryDateCreateIndexRouteImport } from './routes/$entryDate/create/index'
-import { Route as EntryDateTimesheetIdIndexRouteImport } from './routes/$entryDate/$timesheetId/index'
+import { Route as CreateIndexRouteImport } from './routes/create/index'
+import { Route as TimesheetsEntryDateIndexRouteImport } from './routes/timesheets/$entryDate/index'
+import { Route as TimesheetsEntryDateTimesheetIdIndexRouteImport } from './routes/timesheets/$entryDate/$timesheetId/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EntryDateIndexRoute = EntryDateIndexRouteImport.update({
-  id: '/$entryDate/',
-  path: '/$entryDate/',
+const CreateIndexRoute = CreateIndexRouteImport.update({
+  id: '/create/',
+  path: '/create/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EntryDateCreateIndexRoute = EntryDateCreateIndexRouteImport.update({
-  id: '/$entryDate/create/',
-  path: '/$entryDate/create/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EntryDateTimesheetIdIndexRoute =
-  EntryDateTimesheetIdIndexRouteImport.update({
-    id: '/$entryDate/$timesheetId/',
-    path: '/$entryDate/$timesheetId/',
+const TimesheetsEntryDateIndexRoute =
+  TimesheetsEntryDateIndexRouteImport.update({
+    id: '/timesheets/$entryDate/',
+    path: '/timesheets/$entryDate/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const TimesheetsEntryDateTimesheetIdIndexRoute =
+  TimesheetsEntryDateTimesheetIdIndexRouteImport.update({
+    id: '/timesheets/$entryDate/$timesheetId/',
+    path: '/timesheets/$entryDate/$timesheetId/',
     getParentRoute: () => rootRouteImport,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/$entryDate': typeof EntryDateIndexRoute
-  '/$entryDate/$timesheetId': typeof EntryDateTimesheetIdIndexRoute
-  '/$entryDate/create': typeof EntryDateCreateIndexRoute
+  '/create': typeof CreateIndexRoute
+  '/timesheets/$entryDate': typeof TimesheetsEntryDateIndexRoute
+  '/timesheets/$entryDate/$timesheetId': typeof TimesheetsEntryDateTimesheetIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/$entryDate': typeof EntryDateIndexRoute
-  '/$entryDate/$timesheetId': typeof EntryDateTimesheetIdIndexRoute
-  '/$entryDate/create': typeof EntryDateCreateIndexRoute
+  '/create': typeof CreateIndexRoute
+  '/timesheets/$entryDate': typeof TimesheetsEntryDateIndexRoute
+  '/timesheets/$entryDate/$timesheetId': typeof TimesheetsEntryDateTimesheetIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/$entryDate/': typeof EntryDateIndexRoute
-  '/$entryDate/$timesheetId/': typeof EntryDateTimesheetIdIndexRoute
-  '/$entryDate/create/': typeof EntryDateCreateIndexRoute
+  '/create/': typeof CreateIndexRoute
+  '/timesheets/$entryDate/': typeof TimesheetsEntryDateIndexRoute
+  '/timesheets/$entryDate/$timesheetId/': typeof TimesheetsEntryDateTimesheetIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/$entryDate'
-    | '/$entryDate/$timesheetId'
-    | '/$entryDate/create'
+    | '/create'
+    | '/timesheets/$entryDate'
+    | '/timesheets/$entryDate/$timesheetId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$entryDate' | '/$entryDate/$timesheetId' | '/$entryDate/create'
+  to:
+    | '/'
+    | '/create'
+    | '/timesheets/$entryDate'
+    | '/timesheets/$entryDate/$timesheetId'
   id:
     | '__root__'
     | '/'
-    | '/$entryDate/'
-    | '/$entryDate/$timesheetId/'
-    | '/$entryDate/create/'
+    | '/create/'
+    | '/timesheets/$entryDate/'
+    | '/timesheets/$entryDate/$timesheetId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  EntryDateIndexRoute: typeof EntryDateIndexRoute
-  EntryDateTimesheetIdIndexRoute: typeof EntryDateTimesheetIdIndexRoute
-  EntryDateCreateIndexRoute: typeof EntryDateCreateIndexRoute
+  CreateIndexRoute: typeof CreateIndexRoute
+  TimesheetsEntryDateIndexRoute: typeof TimesheetsEntryDateIndexRoute
+  TimesheetsEntryDateTimesheetIdIndexRoute: typeof TimesheetsEntryDateTimesheetIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -88,25 +93,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/$entryDate/': {
-      id: '/$entryDate/'
-      path: '/$entryDate'
-      fullPath: '/$entryDate'
-      preLoaderRoute: typeof EntryDateIndexRouteImport
+    '/create/': {
+      id: '/create/'
+      path: '/create'
+      fullPath: '/create'
+      preLoaderRoute: typeof CreateIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/$entryDate/create/': {
-      id: '/$entryDate/create/'
-      path: '/$entryDate/create'
-      fullPath: '/$entryDate/create'
-      preLoaderRoute: typeof EntryDateCreateIndexRouteImport
+    '/timesheets/$entryDate/': {
+      id: '/timesheets/$entryDate/'
+      path: '/timesheets/$entryDate'
+      fullPath: '/timesheets/$entryDate'
+      preLoaderRoute: typeof TimesheetsEntryDateIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/$entryDate/$timesheetId/': {
-      id: '/$entryDate/$timesheetId/'
-      path: '/$entryDate/$timesheetId'
-      fullPath: '/$entryDate/$timesheetId'
-      preLoaderRoute: typeof EntryDateTimesheetIdIndexRouteImport
+    '/timesheets/$entryDate/$timesheetId/': {
+      id: '/timesheets/$entryDate/$timesheetId/'
+      path: '/timesheets/$entryDate/$timesheetId'
+      fullPath: '/timesheets/$entryDate/$timesheetId'
+      preLoaderRoute: typeof TimesheetsEntryDateTimesheetIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -114,9 +119,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  EntryDateIndexRoute: EntryDateIndexRoute,
-  EntryDateTimesheetIdIndexRoute: EntryDateTimesheetIdIndexRoute,
-  EntryDateCreateIndexRoute: EntryDateCreateIndexRoute,
+  CreateIndexRoute: CreateIndexRoute,
+  TimesheetsEntryDateIndexRoute: TimesheetsEntryDateIndexRoute,
+  TimesheetsEntryDateTimesheetIdIndexRoute:
+    TimesheetsEntryDateTimesheetIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,10 +1,10 @@
-import type { PropsWithChildren } from "react";
-import type { TimesheetTableRowProps } from "./TimesheetTable.props";
-import { EntitySearch } from "@/components/core/control/EntitySearch/Entitysearch";
-import { TimeInput } from "@/components/core/control";
-import { Button } from "@/components/ui/button";
+import { useRef, type PropsWithChildren } from "react";
 import { Trash } from "lucide-react";
 import { Controller } from "react-hook-form";
+import type { TimesheetTableRowProps } from "./TimesheetTable.props";
+import { EntitySearch } from "@/components/core/control";
+import { TimeInput } from "@/components/core/control";
+import { Button } from "@/components/ui/button";
 
 function formatMinutes(minutes: number) {
   const hours = ~~(minutes / 60);
@@ -40,14 +40,14 @@ export function TimesheetTableRow({
   lineTimes,
   isReadOnly,
   gridTemplateColumns,
-  grouping,
-  errors,
   index,
   categoriesQuery,
   subcategoriesQuery,
   control,
   remove,
 }: TimesheetTableRowProps) {
+  const startTimeRef = useRef<HTMLInputElement>(null);
+  const endTimeRef = useRef<HTMLInputElement>(null);
   if (isReadOnly) {
     return (
       <TableRow gridTemplateColumns={gridTemplateColumns}>
@@ -101,9 +101,14 @@ export function TimesheetTableRow({
           render={({ field }) => {
             return (
               <TimeInput
+                ref={startTimeRef}
                 value={field.value ?? ""}
                 onChange={field.onChange}
                 onBlur={() => {
+                  if (startTimeRef && startTimeRef.current) {
+                    field.value = startTimeRef.current.value;
+                  }
+
                   field.onBlur();
                 }}
               />
@@ -118,9 +123,14 @@ export function TimesheetTableRow({
           render={({ field }) => {
             return (
               <TimeInput
+                ref={endTimeRef}
                 value={field.value ?? ""}
                 onChange={field.onChange}
                 onBlur={() => {
+                  if (endTimeRef && endTimeRef.current) {
+                    field.value = endTimeRef.current.value;
+                  }
+
                   field.onBlur();
                 }}
               />

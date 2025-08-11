@@ -1,8 +1,8 @@
 import { Page, PageHeader } from "@/components/layout";
-import { TimesheetPage } from "@/pages/TimesheetPage";
+import { CreateTimesheetPage } from "@/pages/CreateTimesheetPage";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/$entryDate/$timesheetId/")({
+export const Route = createFileRoute("/create/")({
   component: RouteComponent,
 });
 
@@ -10,7 +10,7 @@ function RouteComponent() {
   return (
     <Page>
       <PageHeader />
-      <TimesheetPage />
+      <CreateTimesheetPage />
     </Page>
   );
 }

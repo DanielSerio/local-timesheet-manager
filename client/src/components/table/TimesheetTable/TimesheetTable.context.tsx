@@ -23,6 +23,7 @@ export function calculateGridTemplateColumns(
 function useTimesheetTableState({
   isReadOnly: defaultIsReadOnly,
   grouping: defaultGrouping,
+  isCreateMode,
   timesheetId,
 }: TimesheetTableProps) {
   const [isReadOnly, setIsReadOnly] = useState(defaultIsReadOnly ?? true);
@@ -59,7 +60,8 @@ function useTimesheetTableState({
   const state = {
     isNewTimesheet: !timesheetId,
     timesheetQuery,
-    isReadOnly,
+    isCreateMode: isCreateMode ?? false,
+    isReadOnly: isCreateMode ? false : isReadOnly,
     grouping,
     categoriesQuery,
     subcategoriesQuery,

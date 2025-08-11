@@ -1,4 +1,4 @@
 # TODO:
 
-[ ] List components for Collection route
-[ ] List components form Collection/entryDate route
+[ ] "Create Mode" variant of timesheet table component
+[ ] useTimesheet call on edit route
