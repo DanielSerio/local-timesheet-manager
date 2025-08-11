@@ -1,16 +1,18 @@
-import { Page, PageHeader } from "@/components/layout";
 import { createFileRoute } from "@tanstack/react-router";
+import { Page, PageHeader } from "@/components/layout";
+import { TimesheetListPage } from "@/pages/TimesheetListPage";
 
 export const Route = createFileRoute("/$entryDate/")({
   component: RouteComponent,
 });
-//TODO: route should include list of timesheets, listing using columns:
-// [id, name, totalTime]
+
 function RouteComponent() {
+  const { entryDate } = Route.useParams();
+
   return (
     <Page>
       <PageHeader />
-      <div>Hello "/[entry_date]/"!</div>
+      <TimesheetListPage entryDate={entryDate} />
     </Page>
   );
 }
