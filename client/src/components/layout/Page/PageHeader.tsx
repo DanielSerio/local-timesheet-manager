@@ -9,7 +9,11 @@ import { Link, useLocation } from "@tanstack/react-router";
 import { Fragment } from "react/jsx-runtime";
 
 interface Breadcrumb {
-  id: "/" | "/$entryDate/$timesheetId" | "/$entryDate";
+  id:
+    | "/"
+    | "/create"
+    | "/timesheets/$entryDate/$timesheetId"
+    | "/timesheets/$entryDate";
   name: string;
   path: string;
 }
@@ -28,12 +32,14 @@ export function useBreadcrumbs(): Breadcrumb[] {
     const prevPath = acc.length > 0 ? acc[acc.length - 1].path : "";
     const currentPath = `${prevPath}/${segment}`;
     acc.push({
-      name: segment,
+      name: segment === "create" ? "Create Timesheet" : segment,
       path: currentPath,
       id:
-        countOccurrences(currentPath) > 1
-          ? "/$entryDate/$timesheetId"
-          : "/$entryDate",
+        countOccurrences(currentPath) > 2
+          ? currentPath.includes("timesheets")
+            ? "/timesheets/$entryDate/$timesheetId"
+            : "/timesheets/$entryDate"
+          : "/create",
     });
     return acc;
   }, []);
