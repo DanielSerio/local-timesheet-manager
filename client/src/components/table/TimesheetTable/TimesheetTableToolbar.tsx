@@ -53,8 +53,10 @@ export function TimesheetTableToolbar() {
                 render={({ field, fieldState }) => (
                   <>
                     <Input
-                      type="datetime"
-                      value={(field.value as Date).toISOString().split("T")[0]}
+                      type="date"
+                      value={
+                        (field.value as Date)?.toISOString?.().split?.("T")?.[0]
+                      }
                       onChange={field.onChange}
                       onBlur={field.onBlur}
                       //disabled={!isCreateMode}
