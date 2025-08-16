@@ -36,9 +36,6 @@ export const EmptyTimesheetTable: Story = {
   },
 };
 
-
-
-
 export const CreateTimesheetTable: Story = {
   name: 'TimesheetTable - Create',
   args: {

@@ -10,6 +10,7 @@ import { useFieldArray, useWatch } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import type { LineTimes } from "./TimesheetTable.props";
+import { TimesheetTableBodyLoading } from "./TimesheetTableBodyLoading";
 
 type BaseType = object & { startTime: string; endTime: string };
 
@@ -56,6 +57,7 @@ export function TimesheetTableTBody() {
       form,
       isReadOnly,
       isCreateMode,
+      timesheetQuery,
       grouping,
       categoriesQuery,
       subcategoriesQuery,
@@ -71,6 +73,12 @@ export function TimesheetTableTBody() {
     name: "Lines",
   });
   const lineTimes = useLineTimes(form.control);
+
+  if (timesheetQuery.isLoading) {
+    return (
+      <TimesheetTableBodyLoading gridTemplateColumns={gridTemplateColumns} />
+    );
+  }
 
   return (
     <>

@@ -10,6 +10,7 @@ export function TimesheetTableToolbar() {
     {
       isReadOnly,
       isCreateMode,
+      timesheetQuery,
       form: {
         control,
         register,
@@ -28,6 +29,7 @@ export function TimesheetTableToolbar() {
     }
   };
   const values = getValues();
+  const isLoading = timesheetQuery.isLoading;
 
   return (
     <div className="flex justify-between items-center p-2 border-b gap-2">
@@ -88,9 +90,10 @@ export function TimesheetTableToolbar() {
         )}
       </div>
       {isCreateMode ? (
-        <Button disabled={!isValid}>Create</Button>
+        <Button disabled={!isValid || isLoading}>Create</Button>
       ) : (
         <CancelGroupButton
+          isBusy={isLoading}
           initButton={{ buttonText: "Edit" }}
           isExposed={!isReadOnly}
           setIsExposed={setIsExposed}

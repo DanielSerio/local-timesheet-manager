@@ -1,4 +1,4 @@
-import { useRef, type PropsWithChildren } from "react";
+import { useRef } from "react";
 import { Trash } from "lucide-react";
 import { Controller, type FieldError } from "react-hook-form";
 import type { TimesheetTableRowProps } from "./TimesheetTable.props";
@@ -6,26 +6,8 @@ import { EntitySearch } from "@/components/core/control";
 import { TimeInput } from "@/components/core/control";
 import { Button } from "@/components/ui/button";
 import { formatMinutes } from "./utility";
-
-function Cell({ children, label }: PropsWithChildren<{ label: string }>) {
-  return (
-    <div className="flex justify-between">
-      <span className="label p-2">{label}</span>
-      <span className="value p-2">{children}</span>
-    </div>
-  );
-}
-
-function TableRow({
-  children,
-  gridTemplateColumns,
-}: PropsWithChildren<{ gridTemplateColumns: string }>) {
-  return (
-    <div className="flex row border-b" style={{ gridTemplateColumns }}>
-      {children}
-    </div>
-  );
-}
+import { Cell, TableRow } from "./subcomponents/TimesheetRow";
+import { TimesheetCategory } from "./subcomponents/TimesheetCategory";
 
 export function TimesheetTableRow({
   line,
@@ -46,8 +28,22 @@ export function TimesheetTableRow({
     return (
       <>
         <TableRow gridTemplateColumns={gridTemplateColumns}>
-          <Cell label="Category">{line?.categoryId ?? ""}</Cell>
-          <Cell label="Subcategory">{line?.subcategoryId ?? ""}</Cell>
+          <Cell label="Category">
+            <TimesheetCategory
+              isLoading={categoriesQuery.isLoading}
+              categories={categoriesQuery.data?.records}
+              id={line?.categoryId}
+            />
+          </Cell>
+          <Cell label="Subcategory">
+            {!!line?.subcategoryId && (
+              <TimesheetCategory
+                isLoading={subcategoriesQuery.isLoading}
+                categories={subcategoriesQuery.data?.records}
+                id={line.subcategoryId}
+              />
+            )}
+          </Cell>
           <Cell label="Start Time">{line?.startTime.toString()}</Cell>
           <Cell label="End Time">{line?.endTime.toString()}</Cell>
           <Cell label="Line Time">
