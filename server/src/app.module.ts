@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Category } from './categories/entities/category.entity';
 import { Subcategory } from './subcategories/entities/subcategory.entity';
+import { CollectionsModule } from './collections/collections.module';
 
 @Module({
   imports: [
@@ -28,7 +29,8 @@ import { Subcategory } from './subcategories/entities/subcategory.entity';
       inject: [ConfigService],
     }),
     CategoriesModule,
-    SubcategoriesModule
+    SubcategoriesModule,
+    CollectionsModule
   ],
   providers: [
     {
