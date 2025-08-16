@@ -72,43 +72,49 @@ export function TimesheetTableTBody() {
   });
   const lineTimes = useLineTimes(form.control);
 
-  if (lines.length === 0 && !isCreateMode) {
-    return (
-      <div className="flex flex-col items-center justify-center">
-        <em className="not-italic text-2xl my-8 text-gray-500">No Entries</em>
-      </div>
-    );
-  }
-
   return (
     <>
-      <GridNavigation>
-        <div className="flex flex-col">
-          {lines.map((line, i) => (
-            <TimesheetTableRow
-              key={line.id ?? `row:${i}`}
-              isReadOnly={isReadOnly}
-              index={i}
-              errors={form.formState.errors.Lines?.[i]}
-              grouping={grouping}
-              line={line}
-              lineTimes={lineTimes[i]}
-              control={form.control}
-              gridTemplateColumns={gridTemplateColumns}
-              categoriesQuery={
-                categoriesQuery as UseQueryResult<ListResponse<Category>, Error>
-              }
-              subcategoriesQuery={
-                subcategoriesQuery as UseQueryResult<
-                  ListResponse<Subcategory>,
-                  Error
-                >
-              }
-              remove={remove}
-            />
-          ))}
+      {lines.length === 0 && !isCreateMode ? (
+        <div className="flex flex-col items-center justify-center">
+          <em className="not-italic text-2xl my-8 text-gray-500">No Entries</em>
         </div>
-      </GridNavigation>
+      ) : (
+        <GridNavigation>
+          <div className="flex flex-col">
+            {lines.map((line, i) => {
+              const errors = {
+                ...form.formState.errors.Lines?.[i],
+              };
+              return (
+                <TimesheetTableRow
+                  key={line.id ?? `row:${i}`}
+                  isReadOnly={isReadOnly}
+                  index={i}
+                  errors={errors}
+                  grouping={grouping}
+                  line={line}
+                  lineTimes={lineTimes[i]}
+                  control={form.control}
+                  gridTemplateColumns={gridTemplateColumns}
+                  categoriesQuery={
+                    categoriesQuery as UseQueryResult<
+                      ListResponse<Category>,
+                      Error
+                    >
+                  }
+                  subcategoriesQuery={
+                    subcategoriesQuery as UseQueryResult<
+                      ListResponse<Subcategory>,
+                      Error
+                    >
+                  }
+                  remove={remove}
+                />
+              );
+            })}
+          </div>
+        </GridNavigation>
+      )}
       {!isReadOnly && (
         <footer className="flex items-center justify-end p-2">
           <Button

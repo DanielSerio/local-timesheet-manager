@@ -3,7 +3,7 @@ import { TimesheetTable } from "./TimesheetTable";
 import { TimesheetTableRow } from "./TimesheetTableRow";
 
 const meta = {
-  title: "Table/TimesheetTable/TimesheetTable",
+  title: "Table/TimesheetTable",
   component: TimesheetTable,
 
   subcomponents: {
@@ -25,12 +25,23 @@ type Story = StoryObj<typeof meta>;
 export const NormalTimesheetTable: Story = {
   name: 'TimesheetTable',
   args: {
-    timesheetId: -1
+    timesheetId: -1,
+  },
+};
+
+export const EmptyTimesheetTable: Story = {
+  name: 'TimesheetTable - Empty',
+  args: {
+    timesheetId: -2
   },
 };
 
 
+
+
 export const CreateTimesheetTable: Story = {
   name: 'TimesheetTable - Create',
-  args: {},
+  args: {
+    isCreateMode: true
+  },
 };

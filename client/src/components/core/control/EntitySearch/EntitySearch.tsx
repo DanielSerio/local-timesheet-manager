@@ -28,6 +28,7 @@ function EntitySearchComponent<Type extends Category | Subcategory>(
     disabled,
     getOptionValue,
     getOptionLabel,
+    onSelectId,
   }: EntitySearchProps<Type>,
   ref?: ForwardedRef<HTMLInputElement>
 ) {
@@ -70,8 +71,8 @@ function EntitySearchComponent<Type extends Category | Subcategory>(
           {selected
             ? getOptionLabel(selected)
             : isLoading
-            ? "Loading..."
-            : `Select ${entityName}...`}
+              ? "Loading..."
+              : `Select ${entityName}...`}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -108,6 +109,7 @@ function EntitySearchComponent<Type extends Category | Subcategory>(
                     if (found) {
                       setSelected(found);
                       setIsOpen(false);
+                      onSelectId(found.id);
                     }
                   }}
                 >

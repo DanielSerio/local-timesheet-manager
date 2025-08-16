@@ -5,6 +5,7 @@ import { TimesheetTableTHead } from "./TimesheetTableTHead";
 import { TimesheetTableToolbar } from "./TimesheetTableToolbar";
 //TODO: Focus first select of new row when adding timesheet rows
 //TODO: Different view modes (groupings)
+//TODO: Name field, set date props
 
 export function TimesheetTable({ children, ...props }: TimesheetTableProps) {
   return (

@@ -17,26 +17,29 @@ interface Command {
 }
 
 function selectControl(nextRow: Element, nextCid: number) {
+  const getSelectorString = (elm: string) => `[data-cid="${nextCid}"] ${elm}`;
+
   const input = nextRow.querySelector(
-    `[data-cid="${nextCid}"] input`
+    getSelectorString("input")
   ) as HTMLInputElement | null;
   const select = nextRow.querySelector(
-    `[data-cid="${nextCid}"] select`
+    getSelectorString("select")
   ) as HTMLSelectElement | null;
   const button = nextRow.querySelector(
-    `[data-cid="${nextCid}"] button`
+    getSelectorString("button")
   ) as HTMLButtonElement | null;
   const anchor = nextRow.querySelector(
-    `[data-cid="${nextCid}"] a`
+    getSelectorString("a")
   ) as HTMLButtonElement | null;
   const textarea = nextRow.querySelector(
-    `[data-cid="${nextCid}"] textarea`
+    getSelectorString("textarea")
   ) as HTMLTextAreaElement | null;
 
   return button || select || input || textarea || anchor;
 }
 
 function hasControl(row: Element): boolean {
+  console.info(row);
   const foundInput = row.querySelector("input");
   const foundSelect = row.querySelector("select");
   const foundTextarea = row.querySelector("textarea");
@@ -52,31 +55,33 @@ function hasControl(row: Element): boolean {
   );
 }
 
-function attachGridAttributes(nodes: NodeListOf<ChildNode>) {
+function attachGridAttributes(nodes: HTMLCollection) {
   let rid = 1;
 
   for (const rowNode of nodes) {
-    const cellNodes = rowNode.childNodes;
-    let cid: number = 1;
+    if (hasControl(rowNode as HTMLElement)) {
+      const cellNodes = rowNode.childNodes;
+      let cid: number = 1;
 
-    (rowNode as HTMLElement).dataset.rid = `${rid}`;
+      (rowNode as HTMLElement).dataset.rid = `${rid}`;
 
-    for (const cellNode of cellNodes) {
-      const elm = cellNode as HTMLElement;
+      for (const cellNode of cellNodes) {
+        const elm = cellNode as HTMLElement;
 
-      if (hasControl(elm)) {
-        elm.dataset.cid = `${cid}`;
+        if (hasControl(elm)) {
+          elm.dataset.cid = `${cid}`;
 
-        cid += 1;
+          cid += 1;
+        }
       }
-    }
 
-    rid += 1;
+      rid += 1;
+    }
   }
 }
 
 function applyGridNavigation(rootEl: HTMLElement) {
-  attachGridAttributes(rootEl.childNodes);
+  attachGridAttributes(rootEl.children);
 }
 
 function handleDirection({

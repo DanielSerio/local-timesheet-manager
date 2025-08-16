@@ -9,6 +9,7 @@ export function useTimesheetForm(
 ) {
   const form = useForm({
     defaultValues,
+    mode: "onBlur",
     resolver: zodResolver(TimesheetSchema),
   });
 

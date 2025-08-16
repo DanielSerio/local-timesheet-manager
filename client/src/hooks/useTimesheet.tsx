@@ -37,15 +37,27 @@ export function useTimesheet(timesheetId?: number) {
     queryKey: ["timesheet", timesheetId],
     async queryFn() {
       return await new Promise<Timesheet>((resolve) => {
-        setTimeout(() => {
-          resolve({
-            id: -1,
-            name: "Test Timesheet",
-            date: new Date(),
-            lastUpdateAt: new Date(),
-            Lines: createLines(),
-          });
-        }, 600);
+        if (timesheetId === -2) {
+          setTimeout(() => {
+            resolve({
+              id: -2,
+              name: "Test Timesheet",
+              date: new Date(),
+              lastUpdateAt: new Date(),
+              Lines: [],
+            });
+          }, 600);
+        } else {
+          setTimeout(() => {
+            resolve({
+              id: -1,
+              name: "Test Timesheet",
+              date: new Date("2025-08-12"),
+              lastUpdateAt: new Date(),
+              Lines: createLines(),
+            });
+          }, 600);
+        }
       });
     },
   });

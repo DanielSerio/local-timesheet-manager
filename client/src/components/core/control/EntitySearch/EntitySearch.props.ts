@@ -10,4 +10,5 @@ export interface EntitySearchProps<Option extends Category | Subcategory> extend
   entityName: 'category' | 'subcategory';
   getOptionLabel: (option: Option) => ReactNode;
   getOptionValue: (option: Option) => number;
+  onSelectId: (id: number) => void;
 }
