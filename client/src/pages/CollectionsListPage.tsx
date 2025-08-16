@@ -25,7 +25,7 @@ export function CollectionsListPage() {
           <Link to="/timesheets/create" className="flex-1 flex">
             <Button className="flex-1">Create Timesheet</Button>
           </Link>
-          <Link to="/timesheets/create" className="flex-1 flex">
+          <Link to="/reports/create" className="flex-1 flex">
             <Button className="flex-1">Create Report</Button>
           </Link>
         </div>
