@@ -1,5 +1,6 @@
 import { SearchInput } from "@/components/core/control";
 import { Search } from "@/components/core/form";
+import { PageTitle } from "@/components/layout/Page/PageTitile";
 import { EntryDateList } from "@/components/modules/EntryDate";
 import { useEntryDateList, useEntryDateSearch } from "@/hooks";
 
@@ -15,6 +16,7 @@ export function EntryDateListPage() {
           ref={inputRef}
         />
       </Search>
+      <PageTitle text="Timesheet Collections" />
       <EntryDateList query={entryDateListQuery} />
     </>
   );

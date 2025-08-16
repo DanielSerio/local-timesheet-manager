@@ -1,9 +1,10 @@
+import { PageTitle } from "@/components/layout/Page/PageTitile";
 import { TimesheetTable } from "@/components/table";
 
 export function CreateTimesheetPage() {
   return (
     <>
-      <h1>Create</h1>
+      <PageTitle text="Create Timesheet" />
       <TimesheetTable isCreateMode />
     </>
   );
