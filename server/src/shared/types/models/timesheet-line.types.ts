@@ -23,7 +23,7 @@ interface TimesheetLineBasis extends TimesheetLineCreateBasis {
   Subcategory?: Subcategory | null;
 }
 
-export type TimesheetLine = Pretty<TimesheetLineBasis>;
+export type TimesheetLineRecord = Pretty<TimesheetLineBasis>;
 
 interface ComputedTimesheetLineBasis extends TimesheetLineBasis {
   totalTime: number;

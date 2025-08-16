@@ -8,6 +8,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Category } from './categories/entities/category.entity';
 import { Subcategory } from './subcategories/entities/subcategory.entity';
 import { CollectionsModule } from './collections/collections.module';
+import { TimesheetsModule } from './timesheets/timesheets.module';
+import { TimesheetLine } from './timesheets/entities/timesheet-line.entity';
+import { Timesheet } from './timesheets/entities/timesheet.entity';
 
 @Module({
   imports: [
@@ -22,7 +25,9 @@ import { CollectionsModule } from './collections/collections.module';
         database: configService.get('DATABASE'),
         entities: [
           Category,
-          Subcategory
+          Subcategory,
+          TimesheetLine,
+          Timesheet
         ],
         synchronize: true,
       }),
@@ -30,7 +35,8 @@ import { CollectionsModule } from './collections/collections.module';
     }),
     CategoriesModule,
     SubcategoriesModule,
-    CollectionsModule
+    CollectionsModule,
+    TimesheetsModule
   ],
   providers: [
     {

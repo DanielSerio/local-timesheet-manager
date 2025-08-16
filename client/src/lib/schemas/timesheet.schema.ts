@@ -34,7 +34,7 @@ export const TimesheetLineSchema = z.object({
   categoryId: z.coerce.number<number>().int().positive(),
   subcategoryId: z.coerce.number<number>().int().nullable(),
   startTime: getTimeValidator(['startTime']),
-  endTime: getTimeValidator(['startTime']),
+  endTime: getTimeValidator(['endTime']),
   note: z.string().trim().nullable(),
 } satisfies Record<keyof Omit<TimesheetLine, 'timesheetId' | 'createdAt' | 'lastUpdateAt' | 'Category' | 'Subcategory'>, any>)
   .superRefine((record, ctx) => {
