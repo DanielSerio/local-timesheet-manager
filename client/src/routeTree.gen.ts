@@ -12,7 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TimesheetsCreateIndexRouteImport } from './routes/timesheets/create/index'
 import { Route as TimesheetsEntryDateIndexRouteImport } from './routes/timesheets/$entryDate/index'
+import { Route as ReportsCreateIndexRouteImport } from './routes/reports/create/index'
+import { Route as ReportsGeneratedOnIndexRouteImport } from './routes/reports/$generatedOn/index'
 import { Route as TimesheetsEntryDateTimesheetIdIndexRouteImport } from './routes/timesheets/$entryDate/$timesheetId/index'
+import { Route as ReportsGeneratedOnReportIdIndexRouteImport } from './routes/reports/$generatedOn/$reportId/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -30,57 +33,94 @@ const TimesheetsEntryDateIndexRoute =
     path: '/timesheets/$entryDate/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ReportsCreateIndexRoute = ReportsCreateIndexRouteImport.update({
+  id: '/reports/create/',
+  path: '/reports/create/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsGeneratedOnIndexRoute = ReportsGeneratedOnIndexRouteImport.update({
+  id: '/reports/$generatedOn/',
+  path: '/reports/$generatedOn/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TimesheetsEntryDateTimesheetIdIndexRoute =
   TimesheetsEntryDateTimesheetIdIndexRouteImport.update({
     id: '/timesheets/$entryDate/$timesheetId/',
     path: '/timesheets/$entryDate/$timesheetId/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ReportsGeneratedOnReportIdIndexRoute =
+  ReportsGeneratedOnReportIdIndexRouteImport.update({
+    id: '/reports/$generatedOn/$reportId/',
+    path: '/reports/$generatedOn/$reportId/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/reports/$generatedOn': typeof ReportsGeneratedOnIndexRoute
+  '/reports/create': typeof ReportsCreateIndexRoute
   '/timesheets/$entryDate': typeof TimesheetsEntryDateIndexRoute
   '/timesheets/create': typeof TimesheetsCreateIndexRoute
+  '/reports/$generatedOn/$reportId': typeof ReportsGeneratedOnReportIdIndexRoute
   '/timesheets/$entryDate/$timesheetId': typeof TimesheetsEntryDateTimesheetIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/reports/$generatedOn': typeof ReportsGeneratedOnIndexRoute
+  '/reports/create': typeof ReportsCreateIndexRoute
   '/timesheets/$entryDate': typeof TimesheetsEntryDateIndexRoute
   '/timesheets/create': typeof TimesheetsCreateIndexRoute
+  '/reports/$generatedOn/$reportId': typeof ReportsGeneratedOnReportIdIndexRoute
   '/timesheets/$entryDate/$timesheetId': typeof TimesheetsEntryDateTimesheetIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/reports/$generatedOn/': typeof ReportsGeneratedOnIndexRoute
+  '/reports/create/': typeof ReportsCreateIndexRoute
   '/timesheets/$entryDate/': typeof TimesheetsEntryDateIndexRoute
   '/timesheets/create/': typeof TimesheetsCreateIndexRoute
+  '/reports/$generatedOn/$reportId/': typeof ReportsGeneratedOnReportIdIndexRoute
   '/timesheets/$entryDate/$timesheetId/': typeof TimesheetsEntryDateTimesheetIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/reports/$generatedOn'
+    | '/reports/create'
     | '/timesheets/$entryDate'
     | '/timesheets/create'
+    | '/reports/$generatedOn/$reportId'
     | '/timesheets/$entryDate/$timesheetId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/reports/$generatedOn'
+    | '/reports/create'
     | '/timesheets/$entryDate'
     | '/timesheets/create'
+    | '/reports/$generatedOn/$reportId'
     | '/timesheets/$entryDate/$timesheetId'
   id:
     | '__root__'
     | '/'
+    | '/reports/$generatedOn/'
+    | '/reports/create/'
     | '/timesheets/$entryDate/'
     | '/timesheets/create/'
+    | '/reports/$generatedOn/$reportId/'
     | '/timesheets/$entryDate/$timesheetId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ReportsGeneratedOnIndexRoute: typeof ReportsGeneratedOnIndexRoute
+  ReportsCreateIndexRoute: typeof ReportsCreateIndexRoute
   TimesheetsEntryDateIndexRoute: typeof TimesheetsEntryDateIndexRoute
   TimesheetsCreateIndexRoute: typeof TimesheetsCreateIndexRoute
+  ReportsGeneratedOnReportIdIndexRoute: typeof ReportsGeneratedOnReportIdIndexRoute
   TimesheetsEntryDateTimesheetIdIndexRoute: typeof TimesheetsEntryDateTimesheetIdIndexRoute
 }
 
@@ -107,6 +147,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TimesheetsEntryDateIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reports/create/': {
+      id: '/reports/create/'
+      path: '/reports/create'
+      fullPath: '/reports/create'
+      preLoaderRoute: typeof ReportsCreateIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports/$generatedOn/': {
+      id: '/reports/$generatedOn/'
+      path: '/reports/$generatedOn'
+      fullPath: '/reports/$generatedOn'
+      preLoaderRoute: typeof ReportsGeneratedOnIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/timesheets/$entryDate/$timesheetId/': {
       id: '/timesheets/$entryDate/$timesheetId/'
       path: '/timesheets/$entryDate/$timesheetId'
@@ -114,13 +168,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TimesheetsEntryDateTimesheetIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reports/$generatedOn/$reportId/': {
+      id: '/reports/$generatedOn/$reportId/'
+      path: '/reports/$generatedOn/$reportId'
+      fullPath: '/reports/$generatedOn/$reportId'
+      preLoaderRoute: typeof ReportsGeneratedOnReportIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ReportsGeneratedOnIndexRoute: ReportsGeneratedOnIndexRoute,
+  ReportsCreateIndexRoute: ReportsCreateIndexRoute,
   TimesheetsEntryDateIndexRoute: TimesheetsEntryDateIndexRoute,
   TimesheetsCreateIndexRoute: TimesheetsCreateIndexRoute,
+  ReportsGeneratedOnReportIdIndexRoute: ReportsGeneratedOnReportIdIndexRoute,
   TimesheetsEntryDateTimesheetIdIndexRoute:
     TimesheetsEntryDateTimesheetIdIndexRoute,
 }

@@ -1,28 +1,11 @@
 import { PageTitle } from "@/components/layout/Page/PageTitile";
 import { CollectionListSearch } from "@/components/modules/Collections";
+import { getDateLink } from "@/components/modules/Collections/utility";
 import { CountCell } from "@/components/table/cell/CountCell";
 import { Button } from "@/components/ui/button";
 import { useReportCollectionList } from "@/hooks/useReportCollectionList";
 import { useTimesheetCollectionList } from "@/hooks/useTimesheetCollectionList";
 import { Link } from "@tanstack/react-router";
-import type { PropsWithChildren } from "react";
-
-const ListLink = ({
-  children,
-  entryDate,
-}: PropsWithChildren<{ entryDate: Date | string }>) => {
-  return (
-    <Link to="/timesheets/$entryDate" params={{ entryDate: `${entryDate}` }}>
-      {children}
-    </Link>
-  );
-};
-
-const getDateLink =
-  (entryDate: Date | string) =>
-  ({ children }: PropsWithChildren) => (
-    <ListLink entryDate={entryDate}>{children}</ListLink>
-  );
 
 export function CollectionsListPage() {
   const [
@@ -61,7 +44,7 @@ export function CollectionsListPage() {
             accessorKey: "entryDate",
             cell(props) {
               const entryDate = props.getValue() as string | Date;
-              const DateLink = getDateLink(entryDate);
+              const DateLink = getDateLink(entryDate, "timesheets");
 
               return <DateLink>{`${entryDate}`}</DateLink>;
             },
@@ -87,6 +70,12 @@ export function CollectionsListPage() {
             header: "Generated",
             size: 200,
             accessorKey: "generatedOn",
+            cell(props) {
+              const generatedOn = props.getValue() as string | Date;
+              const DateLink = getDateLink(generatedOn, "reports");
+
+              return <DateLink>{`${generatedOn}`}</DateLink>;
+            },
           },
           {
             id: "count",
