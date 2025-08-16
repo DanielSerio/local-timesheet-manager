@@ -7,7 +7,7 @@ function SearchComponent(
   ref?: ForwardedRef<HTMLElement>
 ) {
   return (
-    <search ref={ref} className={cn(`flex mt-2`, className)} {...props}>
+    <search ref={ref} className={cn(`flex my-2`, className)} {...props}>
       {children}
     </search>
   );
