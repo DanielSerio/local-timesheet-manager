@@ -1,5 +1,5 @@
 import { Page, PageHeader } from "@/components/layout";
-import { EntryDateListPage } from "@/pages/EntryDateListPage";
+import { CollectionsListPage } from "@/pages/CollectionsListPage";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
@@ -10,7 +10,7 @@ function Index() {
   return (
     <Page>
       <PageHeader />
-      <EntryDateListPage />
+      <CollectionsListPage />
     </Page>
   );
 }

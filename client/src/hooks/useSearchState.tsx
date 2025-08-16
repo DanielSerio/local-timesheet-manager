@@ -1,8 +1,8 @@
 import { useRef, useState, type KeyboardEvent } from "react";
 
-let entryDateTimeout: NodeJS.Timeout;
+let searchTimeout: NodeJS.Timeout;
 
-export function useEntryDateSearch() {
+export function useSearchState(timeout: number = 400) {
   const [searchText, setSearchText] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -12,18 +12,17 @@ export function useEntryDateSearch() {
   const onSearchKeyDown = (ev: KeyboardEvent<HTMLElement>) => {
     ev.stopPropagation();
 
-    if (entryDateTimeout) {
-      clearTimeout(entryDateTimeout);
+    if (searchTimeout) {
+      clearTimeout(searchTimeout);
     }
 
-    entryDateTimeout = setTimeout(() => {
+    searchTimeout = setTimeout(() => {
       if (inputRef.current) {
         const { value } = inputRef.current;
 
         setSearchText(value);
-        console.info("setSearchText", value);
       }
-    }, 400);
+    }, timeout);
   };
 
   const state = {

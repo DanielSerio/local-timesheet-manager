@@ -11,17 +11,12 @@ import { Fragment } from "react/jsx-runtime";
 interface Breadcrumb {
   id:
     | "/"
-    | "/create"
+    | "/timesheets"
+    | "/timesheets/create"
     | "/timesheets/$entryDate/$timesheetId"
     | "/timesheets/$entryDate";
   name: string;
   path: string;
-}
-
-function countOccurrences(text: string, charToCount: string = "/") {
-  const regex = new RegExp(charToCount, "g");
-  const matches = text.match(regex);
-  return matches ? matches.length : 0;
 }
 
 export function useBreadcrumbs(): Breadcrumb[] {
@@ -34,12 +29,7 @@ export function useBreadcrumbs(): Breadcrumb[] {
     acc.push({
       name: segment === "create" ? "Create Timesheet" : segment,
       path: currentPath,
-      id:
-        countOccurrences(currentPath) > 2
-          ? currentPath.includes("timesheets")
-            ? "/timesheets/$entryDate/$timesheetId"
-            : "/timesheets/$entryDate"
-          : "/create",
+      id: currentPath as Breadcrumb["id"],
     });
     return acc;
   }, []);
@@ -47,7 +37,7 @@ export function useBreadcrumbs(): Breadcrumb[] {
 
 export function PageHeader() {
   const state = useBreadcrumbs();
-
+  console.info(state);
   return (
     <header
       id="pageHeader"
@@ -57,18 +47,24 @@ export function PageHeader() {
         <BreadcrumbList>
           <BreadcrumbItem className="py-1">
             <BreadcrumbLink asChild>
-              <Link to="/">Collections</Link>
+              <Link to="/" className="text-indigo-500 underline">
+                Collections
+              </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           {state.map(({ name, id }) => (
             <Fragment key={id}>
               <BreadcrumbSeparator />
               <BreadcrumbItem className="py-1">
-                <BreadcrumbLink asChild>
-                  <Link to={id} params={{ [id.replace(/[\/$]/g, "")]: name }}>
-                    {name}
-                  </Link>
-                </BreadcrumbLink>
+                {id === "/timesheets" ? (
+                  <span>{name}</span>
+                ) : (
+                  <BreadcrumbLink asChild>
+                    <Link to={id} params={{ [id.replace(/[\/$]/g, "")]: name }}>
+                      <span className="text-indigo-500 underline">{name}</span>
+                    </Link>
+                  </BreadcrumbLink>
+                )}
               </BreadcrumbItem>
             </Fragment>
           ))}
