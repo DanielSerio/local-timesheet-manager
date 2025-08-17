@@ -12,6 +12,7 @@ import { TimesheetsModule } from './timesheets/timesheets.module';
 import { TimesheetLine } from './timesheets/entities/timesheet-line.entity';
 import { Timesheet } from './timesheets/entities/timesheet.entity';
 import { ReportsModule } from './reports/reports.module';
+import { Report } from './reports/entities/report.entity';
 
 @Module({
   imports: [
@@ -28,7 +29,8 @@ import { ReportsModule } from './reports/reports.module';
           Category,
           Subcategory,
           TimesheetLine,
-          Timesheet
+          Timesheet,
+          Report
         ],
         synchronize: true,
       }),

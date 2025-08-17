@@ -1,4 +1,4 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateReportDto } from './create-report.dto';
+import { createZodDto } from 'nestjs-zod';
+import { ReportValidator } from '#/shared/validators/report.validator';
 
-export class UpdateReportDto extends PartialType(CreateReportDto) {}
+export class UpdateReportDto extends createZodDto(ReportValidator.update) { }
