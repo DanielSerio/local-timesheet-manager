@@ -6,6 +6,11 @@ import { Timesheet } from './entities/timesheet.entity';
 import { TimesheetLine } from './entities/timesheet-line.entity';
 import { RelatedEntityListParams } from '#/shared/services/related-entity.service';
 
+type TimesheetBreakdownRecord = Pick<Timesheet, 'id' | 'name'> & {
+  // time in minutes
+  totalTime: number;
+};
+
 @Injectable()
 export class TimesheetsService {
   private get repo() {
@@ -126,6 +131,51 @@ export class TimesheetsService {
         }
       },
       sorting,
+      records
+    };
+  }
+
+  async findForDate(date: string) {
+    const repo = this.repo;
+
+    const builder = repo.createQueryBuilder('timesheet');
+    const count = await repo.count({
+      where: {
+        date: new Date(Date.parse(date))
+      }
+    });
+
+    const queryBasis = builder
+      .select([
+        'timesheet.id AS id',
+        'timesheet.name AS name',
+        `COALESCE(SUM(unixepoch(concat('2025-01-07', ' ', line.endTime)) - unixepoch(concat('2025-01-07', ' ', line.endTime)) / 60), 0) AS "totalTime"`
+      ])
+      .leftJoin('timesheet.Lines', 'line')
+      .where('timesheet.date = :date', { date: new Date(Date.parse(date)) })
+      .groupBy('timesheet.id')
+      .addGroupBy('timesheet.name')
+      .orderBy('timesheet.createdAt', 'DESC')
+      .limit(5)
+      .offset(0);
+
+    const results = await queryBasis.getRawMany<TimesheetBreakdownRecord>();
+
+    const totalPages = Math.ceil(count / 5);
+    const records = results;
+
+    return {
+      paging: {
+        limit: 5,
+        offset: 0,
+        total: {
+          records: count,
+          pages: totalPages
+        }
+      },
+      order: {
+        createdAt: 'DESC'
+      },
       records
     };
   }

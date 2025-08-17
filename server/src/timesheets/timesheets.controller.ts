@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Put, Query, BadRequestException, HttpCode } from '@nestjs/common';
 import { TimesheetsService } from './timesheets.service';
 import { CreateTimesheetDto } from './dto/create-timesheet.dto';
 import { UpdateTimesheetDto } from './dto/update-timesheet.dto';
 import { getPagingPropertyFromURLQueryString } from '#/shared/utilities';
 import { SortDirection, Sorting } from '#/shared/services/related-entity.service';
 import { Timesheet } from './entities/timesheet.entity';
+import { isValid } from 'date-fns';
 
 @Controller('timesheets')
 export class TimesheetsController {
@@ -73,6 +74,20 @@ export class TimesheetsController {
     return this.timesheetsService.remove(body);
   }
 
+  @HttpCode(200)
+  @Get('for-date')
+  forDate(@Query('date') date?: string) {
+    if (!date) {
+      throw new BadRequestException(`date query is required`);
+    }
+
+    if (!isValid(new Date(Date.parse(date)))) {
+      throw new BadRequestException(`'${date}' is not a valid date`);
+    }
+
+    return this.timesheetsService.findForDate(date);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.timesheetsService.findOne(+id);
@@ -82,6 +97,4 @@ export class TimesheetsController {
   update(@Param('id') id: string, @Body() updateTimesheetDto: UpdateTimesheetDto) {
     return this.timesheetsService.update(+id, updateTimesheetDto);
   }
-
-
 }
