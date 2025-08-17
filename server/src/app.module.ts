@@ -11,6 +11,7 @@ import { CollectionsModule } from './collections/collections.module';
 import { TimesheetsModule } from './timesheets/timesheets.module';
 import { TimesheetLine } from './timesheets/entities/timesheet-line.entity';
 import { Timesheet } from './timesheets/entities/timesheet.entity';
+import { ReportsModule } from './reports/reports.module';
 
 @Module({
   imports: [
@@ -36,7 +37,8 @@ import { Timesheet } from './timesheets/entities/timesheet.entity';
     CategoriesModule,
     SubcategoriesModule,
     CollectionsModule,
-    TimesheetsModule
+    TimesheetsModule,
+    ReportsModule
   ],
   providers: [
     {

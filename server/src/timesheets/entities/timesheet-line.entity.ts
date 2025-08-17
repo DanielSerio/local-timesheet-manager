@@ -24,10 +24,10 @@ export class TimesheetLine implements TimesheetLineRecord {
   @Column('int', { nullable: true })
   subcategoryId: number | null;
 
-  @Column('char', { length: 5 })
+  @Column('varchar', { length: 5 })
   startTime: string;
 
-  @Column('char', { length: 5 })
+  @Column('varchar', { length: 5 })
   endTime: string;
 
   @Column('varchar', { length: 200 })

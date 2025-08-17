@@ -11,8 +11,8 @@
  * is not a valid number or less than the minimum value, it will return the fallback value for that
  * key.
  */
-export function getPagingPropertyFromURLQueryString<Key extends 'limit' | 'offset'>(key: Key, value?: string) {
-  const fallback = key === 'limit' ? 25 : 0;
+export function getPagingPropertyFromURLQueryString<Key extends 'limit' | 'offset'>(key: Key, value?: string, defaultLimit?: number) {
+  const fallback = key === 'limit' ? (defaultLimit ?? 25) : 0;
   const min = key === 'limit' ? 1 : 0;
 
   if (value === undefined || value === '' || isNaN(+value)) {
