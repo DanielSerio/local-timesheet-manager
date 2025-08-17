@@ -1,4 +1,5 @@
 # TODO:
 
-[ ] "Create Mode" variant of timesheet table component
-[ ] useTimesheet call on edit route
+[ ] "View Mode" variants of timesheet table component
+[ ] Create timesheet client service
+[ ] Update timesheet client service
