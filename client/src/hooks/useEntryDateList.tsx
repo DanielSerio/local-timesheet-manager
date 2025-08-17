@@ -1,5 +1,4 @@
 import { CollectionService } from "@/lib/services/collection.service";
-import type { ListResponse } from "@/lib/types/response.types";
 import { useQuery } from "@tanstack/react-query";
 
 export interface EntryDateItem {
