@@ -1,6 +1,7 @@
 import { TimesheetRecord } from "#/shared/types/models/timesheet.types";
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { TimesheetLine } from "./timesheet-line.entity";
+import { Report } from "#/reports/entities/report.entity";
 
 @Entity()
 export class Timesheet implements TimesheetRecord {
@@ -21,4 +22,7 @@ export class Timesheet implements TimesheetRecord {
 
   @OneToMany(() => TimesheetLine, (line) => line.Timesheet)
   Lines?: TimesheetLine[];
+
+  @ManyToMany(() => Report, (report) => report.Timesheets)
+  Reports?: Report[];
 }
