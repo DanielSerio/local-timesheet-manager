@@ -10,7 +10,6 @@ import { TableAlert } from "./TableAlert";
 import { ApiTableRowSkeleton } from "./ApiTableRowSkeleton";
 import { ApiTableRow } from "./ApiTableRow";
 import { TableCell } from "./TableCell";
-import type { ReactNode } from "react";
 
 const BLANK: any[] = [];
 
@@ -42,7 +41,7 @@ export function ApiTable<TData extends RowData, TValue = unknown>({
             <p>{error.message}</p>
           </TableAlert>
         )}
-        {!error && !isLoading && (!data || data?.records.length === 0) && (
+        {!error && !isLoading && (!data || data?.records?.length === 0) && (
           <TableAlert mode="subtle">
             <p>No Records</p>
           </TableAlert>
@@ -60,7 +59,7 @@ export function ApiTable<TData extends RowData, TValue = unknown>({
         {!isLoading &&
           !error &&
           !!data?.records &&
-          data.records.length > 0 &&
+          data.records?.length > 0 &&
           table.getRowModel().flatRows.map((row) => (
             <ApiTableRow gridTemplateColumns={gridTemplateColumns} key={row.id}>
               {row.getAllCells().map((cell) => {
