@@ -31,6 +31,7 @@ const getLink =
   );
 
 export function TimesheetList({ query, entryDate }: TimesheetListProps) {
+  console.error("query.error", query.error);
   return (
     <ApiTable
       isLoading={query.isLoading}
@@ -40,7 +41,7 @@ export function TimesheetList({ query, entryDate }: TimesheetListProps) {
         {
           id: "name",
           header: "Name",
-          size: 240,
+          size: 200,
           accessorFn(props) {
             return {
               name: props.name,

@@ -36,6 +36,10 @@ class CollectionApiService extends ApiService {
     });
     const response = await fetch(`${this._URL}/${collection}?${params}`);
 
+    if (response.status >= 400) {
+      throw await response.json();
+    }
+
     return await response.json() as Pretty<ListResponse<CollectionRecord<Name>>>;
   }
 }
