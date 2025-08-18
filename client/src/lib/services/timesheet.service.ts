@@ -1,4 +1,5 @@
 import type { ListResponse } from "../types/response.types";
+import type { Timesheet, TimesheetCreate, TimesheetUpdate } from "../types/timesheet.types";
 import type { Pretty } from "../types/utility.types";
 import { ApiService } from "./api.service";
 
@@ -15,19 +16,20 @@ class TimesheetApiService extends ApiService {
     });
   }
 
-
   async listTimesheetsForDate(entryDate: string) {
     const params = new URLSearchParams({
       date: entryDate,
     });
 
-    const response = await fetch(`${this._URL}/for-date/?${params}`);
+    return await this.GET<Pretty<ListResponse<TimesheetListItem>>>(`/for-date?${params}`);
+  }
 
-    if (response.status >= 400) {
-      throw await response.json();
-    }
+  async createTimesheet(body: TimesheetCreate) {
+    return await this.POST<TimesheetCreate, Pretty<Timesheet>>(body);
+  }
 
-    return await response.json() as Pretty<ListResponse<TimesheetListItem>>;
+  async updateTimesheet(body: TimesheetUpdate) {
+    return await this.PATCH<TimesheetUpdate, Pretty<Timesheet>>(body);
   }
 }
 

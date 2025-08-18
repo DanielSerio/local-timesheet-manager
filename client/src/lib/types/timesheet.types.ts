@@ -17,4 +17,11 @@ interface TimesheetBasis extends TimesheetCreateBasis {
   Lines?: (TimesheetLine | ComputedTimesheetLine | TimesheetLineCreate)[];
 }
 
-export type Timesheet = Pretty<TimesheetBasis>;
+export type Timesheet = Pretty<TimesheetBasis> & {
+  Lines?: (TimesheetLine | ComputedTimesheetLine)[];
+};
+
+export type TimesheetUpdate = Pretty<TimesheetBasis> & {
+  Lines?: (TimesheetLine | ComputedTimesheetLine)[];
+  RemoveLines?: number[];
+};
