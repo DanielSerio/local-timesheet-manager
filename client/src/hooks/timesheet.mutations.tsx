@@ -61,3 +61,11 @@ export const useUpdateTimesheet = ({
       onError?.(error);
     },
   });
+
+export const useDeleteTimesheets = () =>
+  useMutation({
+    mutationKey: ["timesheet", "delete", "many"],
+    async mutationFn(timesheetIds: number[]) {
+      return await TimesheetService.deleteTimesheets(timesheetIds);
+    },
+  });

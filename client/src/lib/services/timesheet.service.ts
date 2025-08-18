@@ -24,12 +24,19 @@ class TimesheetApiService extends ApiService {
     return await this.GET<Pretty<ListResponse<TimesheetListItem>>>(`/for-date?${params}`);
   }
 
-  async createTimesheet(body: TimesheetCreate) {
-    return await this.POST<TimesheetCreate, Pretty<Timesheet>>(body);
+  async createTimesheet(timesheet: TimesheetCreate) {
+    return await this.POST<TimesheetCreate, Pretty<Timesheet>>(timesheet);
   }
 
-  async updateTimesheet(body: TimesheetUpdate) {
-    return await this.PATCH<TimesheetUpdate, Pretty<Timesheet>>(body);
+  async updateTimesheet(timesheet: TimesheetUpdate) {
+    return await this.PATCH<TimesheetUpdate, Pretty<Timesheet>>(timesheet);
+  }
+
+  async deleteTimesheets(timesheetIds: number[]) {
+    return await this.PUT<number[], {
+      raw: unknown;
+      affected?: number | null | undefined;
+    }>(timesheetIds);
   }
 }
 
