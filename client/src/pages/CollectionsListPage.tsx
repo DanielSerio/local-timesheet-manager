@@ -41,7 +41,7 @@ export function CollectionsListPage() {
             id: "date",
             header: "Date",
             size: 200,
-            accessorKey: "entryDate",
+            accessorKey: "date",
             cell(props) {
               const entryDate = props.getValue() as string | Date;
               const DateLink = getDateLink(entryDate, "timesheets");

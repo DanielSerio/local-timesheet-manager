@@ -17,8 +17,8 @@ type CollectionEnt<Name extends CollectionName> = Name extends 'entry-date' ?
 
 @Injectable()
 export class CollectionsService {
-  private getBuilder() {
-    return this.source.createQueryBuilder();
+  private getBuilder(table: 'timesheet' | 'report') {
+    return this.source.createQueryBuilder(table === 'timesheet' ? Timesheet : Report, table);
   }
 
   constructor(private source: DataSource) { }
@@ -29,17 +29,23 @@ export class CollectionsService {
     limit: qLimit
   }: SearchCollectionParams<Name>) {
     const limit = qLimit ? ~~qLimit : 5;
-
-    const builder = this.getBuilder();
-    const tableName = collection === 'entry-date' ? 'timesheets' : 'reports';
+    const tableName = collection === 'entry-date' ? 'timesheet' : 'report';
+    const builder = this.getBuilder(tableName);
     const fieldName = collection === 'entry-date' ? 'date' : 'generatedon';
 
-    const records = await builder.select(`count(id),${fieldName}`)
-      .from(collection === 'entry-date' ? Timesheet : Report, `${tableName}`)
-      .where(`${fieldName} LIKE('%${searchQuery}%')`)
-      .groupBy(`${fieldName}`)
-      .limit(limit)
-      .getMany() as CollectionEnt<Name>[];
+    const recordsQuery = await builder.select(`count(id) as count,${tableName}.${fieldName}`)
+      .where(searchQuery.trim().length ? `${fieldName} LIKE('%${searchQuery}%')` : '1=1')
+      .groupBy(`${tableName}.${fieldName}`)
+      .limit(limit);
+
+    console.info('recordsQuery',);
+
+    const records = await recordsQuery.execute() as CollectionEnt<Name>[];
+
+    console.info({
+      query: recordsQuery.getQuery(),
+      result: records
+    });
 
     return {
       paging: {

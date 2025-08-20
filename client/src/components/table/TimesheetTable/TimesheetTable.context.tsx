@@ -58,7 +58,7 @@ function useTimesheetTableState({
   }, [defaultGrouping]);
 
   const state = {
-    isNewTimesheet: !timesheetId,
+    timesheetId,
     timesheetQuery,
     isCreateMode: isCreateMode ?? false,
     isReadOnly: isCreateMode ? false : isReadOnly,

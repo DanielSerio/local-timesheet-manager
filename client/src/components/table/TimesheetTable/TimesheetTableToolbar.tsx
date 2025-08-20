@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { useTimesheetTableContext } from "./TimesheetTable.context";
 import { formatDate } from "./utility";
 import { Controller } from "react-hook-form";
+import { useCreateTimesheet, useUpdateTimesheet } from "@/hooks";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function TimesheetTableToolbar() {
   const [
@@ -11,6 +13,7 @@ export function TimesheetTableToolbar() {
       isReadOnly,
       isCreateMode,
       timesheetQuery,
+      timesheetId,
       form: {
         control,
         register,
@@ -20,6 +23,19 @@ export function TimesheetTableToolbar() {
     },
     { setIsReadOnly },
   ] = useTimesheetTableContext();
+  const queryClient = useQueryClient();
+
+  const invalidate = () =>
+    queryClient.invalidateQueries({ queryKey: ["timesheet", "list"] });
+
+  const createMutation = useCreateTimesheet({
+    invalidate,
+  });
+
+  const updateMutation = useUpdateTimesheet({
+    timesheetId,
+    invalidate,
+  });
 
   const setIsExposed = (value: boolean) => {
     if (value) {
@@ -30,6 +46,21 @@ export function TimesheetTableToolbar() {
   };
   const values = getValues();
   const isLoading = timesheetQuery.isLoading;
+
+  const onSubmit = () => {
+    const formValues = getValues();
+
+    const data = {
+      ...formValues,
+      date: formValues.date as Date,
+    };
+
+    if (isCreateMode) {
+      return createMutation.mutate(data);
+    }
+
+    return updateMutation.mutate(data);
+  };
 
   return (
     <div className="flex justify-between items-center p-2 border-b gap-2">
@@ -90,7 +121,9 @@ export function TimesheetTableToolbar() {
         )}
       </div>
       {isCreateMode ? (
-        <Button disabled={!isValid || isLoading}>Create</Button>
+        <Button disabled={!isValid || isLoading} onClick={onSubmit}>
+          Create
+        </Button>
       ) : (
         <CancelGroupButton
           isBusy={isLoading}
@@ -98,7 +131,9 @@ export function TimesheetTableToolbar() {
           isExposed={!isReadOnly}
           setIsExposed={setIsExposed}
         >
-          <Button disabled={!isValid}>Save</Button>
+          <Button disabled={!isValid} onClick={onSubmit}>
+            Save
+          </Button>
         </CancelGroupButton>
       )}
     </div>

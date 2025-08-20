@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Put, Query, BadRequestException, HttpCode } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Put, Query, BadRequestException, HttpCode, BadGatewayException } from '@nestjs/common';
 import { TimesheetsService } from './timesheets.service';
 import { CreateTimesheetDto } from './dto/create-timesheet.dto';
 import { UpdateTimesheetDto } from './dto/update-timesheet.dto';
@@ -6,6 +6,8 @@ import { getPagingPropertyFromURLQueryString } from '#/shared/utilities';
 import { SortDirection, Sorting } from '#/shared/services/related-entity.service';
 import { Timesheet } from './entities/timesheet.entity';
 import { isValid } from 'date-fns';
+import { TimesheetValidator } from '#/shared/validators/timesheet.validator';
+import z from 'zod';
 
 @Controller('timesheets')
 export class TimesheetsController {
@@ -47,7 +49,16 @@ export class TimesheetsController {
 
   @Post()
   create(@Body() createTimesheetDto: CreateTimesheetDto) {
-    return this.timesheetsService.create(createTimesheetDto);
+    const parsed = TimesheetValidator.create.parse(createTimesheetDto);
+
+    if (!parsed) {
+      throw new BadRequestException(`Could not parse timesheet`);
+    }
+
+    return this.timesheetsService.create({
+      ...parsed,
+      Lines: parsed.Lines ?? []
+    });
   }
 
   @Get()
@@ -71,7 +82,9 @@ export class TimesheetsController {
 
   @Put('delete')
   remove(@Body() body: number[]) {
-    return this.timesheetsService.remove(body);
+    const parsed = z.array(TimesheetValidator.delete).parse(body);
+
+    return this.timesheetsService.remove(parsed);
   }
 
   @HttpCode(200)
@@ -95,6 +108,15 @@ export class TimesheetsController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTimesheetDto: UpdateTimesheetDto) {
-    return this.timesheetsService.update(+id, updateTimesheetDto);
+    const parsed = TimesheetValidator.update.parse(updateTimesheetDto);
+
+    if (!parsed) {
+      throw new BadRequestException(`Could not parse timesheet`);
+    }
+
+    return this.timesheetsService.update(+id, {
+      ...parsed,
+      Lines: parsed.Lines ?? undefined
+    });
   }
 }

@@ -139,9 +139,10 @@ export class TimesheetsService {
     const repo = this.repo;
 
     const builder = repo.createQueryBuilder('timesheet');
+    const finalDate = date as unknown as Date;
     const count = await repo.count({
       where: {
-        date: new Date(Date.parse(date))
+        date: finalDate
       }
     });
 
@@ -152,7 +153,7 @@ export class TimesheetsService {
         `COALESCE(SUM(unixepoch(concat('2025-01-07', ' ', line.endTime)) - unixepoch(concat('2025-01-07', ' ', line.endTime)) / 60), 0) AS "totalTime"`
       ])
       .leftJoin('timesheet.Lines', 'line')
-      .where('timesheet.date = :date', { date: new Date(Date.parse(date)) })
+      .where('timesheet.date = :date', { date: finalDate })
       .groupBy('timesheet.id')
       .addGroupBy('timesheet.name')
       .orderBy('timesheet.createdAt', 'DESC')

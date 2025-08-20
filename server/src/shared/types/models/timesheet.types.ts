@@ -2,8 +2,8 @@ import type { ComputedTimesheetLine, TimesheetLineCreate, TimesheetLineRecord } 
 import type { Pretty } from "../utility.types";
 
 interface TimesheetCreateBasis {
-  name?: string;
-  date?: Date;
+  name: string;
+  date: Date;
   Lines?: TimesheetLineCreate[];
 }
 

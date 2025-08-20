@@ -1,7 +1,10 @@
 import { ReportValidator } from "#/shared/validators/report.validator";
-import { createZodDto } from "nestjs-zod";
+import z from "zod";
 
-export class CreateReportDto extends createZodDto(ReportValidator.create) {
+
+type Schema = z.infer<typeof ReportValidator.create>;
+
+export class CreateReportDto implements Schema {
   name: string;
   timesheetIds: number[];
 }

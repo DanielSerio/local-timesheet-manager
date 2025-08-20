@@ -43,7 +43,9 @@ export const useUpdateTimesheet = ({
 }: TimesheetUpdateMutationParams) =>
   useMutation({
     mutationKey: ["timesheet", timesheetId, "update"],
-    async mutationFn(timesheet: Omit<TimesheetUpdate, "id">) {
+    async mutationFn(
+      timesheet: Omit<TimesheetUpdate, "id" | "createdAt" | "lastUpdateAt">
+    ) {
       if (!timesheetId) {
         throw new Error(`No timesheetId provided`);
       }

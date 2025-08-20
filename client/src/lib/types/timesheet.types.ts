@@ -21,7 +21,12 @@ export type Timesheet = Pretty<TimesheetBasis> & {
   Lines?: (TimesheetLine | ComputedTimesheetLine)[];
 };
 
-export type TimesheetUpdate = Pretty<TimesheetBasis> & {
-  Lines?: (TimesheetLine | ComputedTimesheetLine)[];
+type UpdateLine = TimesheetLine | ComputedTimesheetLine;
+
+export type TimesheetUpdate = Omit<Pretty<TimesheetBasis>, 'lastUpdateAt' | 'id' | 'createdAt'> & {
+  id?: number | null;
+  lastUpdateAt?: Date;
+  createdAt?: Date;
+  Lines?: (Omit<UpdateLine, 'lastUpdateAt' | 'timesheetId' | 'createdAt' | 'id'>)[];
   RemoveLines?: number[];
 };

@@ -43,9 +43,12 @@ export class ReportsService {
       throw new NotFoundException(`Report with ID '${id}' not found`);
     }
 
+    const existingIds = (found.Timesheets ?? []).map(({ id }) => id);
+    const newIds = updateReportDto.timesheetIds ?? [];
+    const ids = Array.from(new Set([...existingIds, ...newIds]));
     const foundTimesheets = await this.timesheetsRepo.find({
       where: {
-        id: In(updateReportDto.timesheetIds)
+        id: In(ids)
       }
     });
 

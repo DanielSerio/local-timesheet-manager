@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CategoriesModule } from './categories/categories.module';
 import { SubcategoriesModule } from './subcategories/subcategories.module';
-import { APP_PIPE } from '@nestjs/core';
-import { ZodValidationPipe } from 'nestjs-zod';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Category } from './categories/entities/category.entity';
@@ -13,6 +11,7 @@ import { TimesheetLine } from './timesheets/entities/timesheet-line.entity';
 import { Timesheet } from './timesheets/entities/timesheet.entity';
 import { ReportsModule } from './reports/reports.module';
 import { Report } from './reports/entities/report.entity';
+import { InitialDataSeeding1755610121776 } from './migrations/1755610121776-InitialDataSeeding';
 
 @Module({
   imports: [
@@ -32,7 +31,10 @@ import { Report } from './reports/entities/report.entity';
           Timesheet,
           Report
         ],
-        synchronize: true,
+        migrations: [
+          InitialDataSeeding1755610121776
+        ],
+        migrationsRun: true
       }),
       inject: [ConfigService],
     }),
@@ -41,12 +43,6 @@ import { Report } from './reports/entities/report.entity';
     CollectionsModule,
     TimesheetsModule,
     ReportsModule
-  ],
-  providers: [
-    {
-      provide: APP_PIPE,
-      useClass: ZodValidationPipe,
-    },
   ]
 })
 export class AppModule { }

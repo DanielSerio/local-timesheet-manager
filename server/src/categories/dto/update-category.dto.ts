@@ -1,4 +1,8 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateCategoryDto } from './create-category.dto';
+import { CategoryValidator } from '#/shared/validators/category.validator';
+import z from 'zod';
 
-export class UpdateCategoryDto extends PartialType(CreateCategoryDto) {}
+type Schema = z.infer<typeof CategoryValidator.update>;
+
+export class UpdateCategoryDto implements Schema {
+  name: string;
+}

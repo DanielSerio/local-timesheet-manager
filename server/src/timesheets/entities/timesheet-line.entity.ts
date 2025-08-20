@@ -30,7 +30,7 @@ export class TimesheetLine implements TimesheetLineRecord {
   @Column('varchar', { length: 5 })
   endTime: string;
 
-  @Column('varchar', { length: 200 })
+  @Column('varchar', { length: 200, nullable: true })
   note: string | null;
 
   @ManyToOne(() => Timesheet)

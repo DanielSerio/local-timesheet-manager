@@ -1,6 +1,8 @@
-import { createZodDto } from "nestjs-zod";
 import { SubcategoryValidator } from "src/shared/validators/subcategory.validator";
+import z from "zod";
 
-export class CreateSubcategoryDto extends createZodDto(SubcategoryValidator.create) {
+type Schema = z.infer<typeof SubcategoryValidator.create>;
+
+export class CreateSubcategoryDto implements Schema {
   name: string;
 }

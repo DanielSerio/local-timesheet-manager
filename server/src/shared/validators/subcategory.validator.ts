@@ -6,4 +6,8 @@ export class SubcategoryValidator {
   static create = z.object({
     name: nameSchema,
   });
+
+  static update = z.object({
+    name: nameSchema,
+  });
 }
