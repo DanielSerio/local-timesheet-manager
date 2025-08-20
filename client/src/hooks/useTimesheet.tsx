@@ -1,4 +1,3 @@
-import type { TimesheetRow } from "@/components/table/TimesheetTable/TimesheetTable.props";
 import { TimesheetService } from "@/lib/services/timesheet.service";
 import type { TimesheetLineCreate } from "@/lib/types/timesheet-line.types";
 import type { Timesheet } from "@/lib/types/timesheet.types";

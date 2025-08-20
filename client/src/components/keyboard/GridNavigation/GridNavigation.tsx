@@ -16,30 +16,33 @@ interface Command {
   columnCount: number;
 }
 
-function selectControl(nextRow: Element, nextCid: number) {
+function selectAllControls(nextRow: Element, nextCid: number) {
   const getSelectorString = (elm: string) => `[data-cid="${nextCid}"] ${elm}`;
+  const elms = ["input", "select", "button", "a", "textarea"] as const;
 
-  const input = nextRow.querySelector(
-    getSelectorString("input")
-  ) as HTMLInputElement | null;
-  const select = nextRow.querySelector(
-    getSelectorString("select")
-  ) as HTMLSelectElement | null;
-  const button = nextRow.querySelector(
-    getSelectorString("button")
-  ) as HTMLButtonElement | null;
-  const anchor = nextRow.querySelector(
-    getSelectorString("a")
-  ) as HTMLButtonElement | null;
-  const textarea = nextRow.querySelector(
-    getSelectorString("textarea")
-  ) as HTMLTextAreaElement | null;
+  return elms.reduce(
+    (selected, name) => {
+      selected[name] = nextRow.querySelector(getSelectorString(name));
+
+      return selected;
+    },
+    {} as Record<(typeof elms)[number], HTMLElement | null>
+  );
+}
+
+function selectControl(nextRow: Element, nextCid: number) {
+  const {
+    input,
+    select,
+    button,
+    a: anchor,
+    textarea,
+  } = selectAllControls(nextRow, nextCid);
 
   return button || select || input || textarea || anchor;
 }
 
 function hasControl(row: Element): boolean {
-  console.info(row);
   const foundInput = row.querySelector("input");
   const foundSelect = row.querySelector("select");
   const foundTextarea = row.querySelector("textarea");
