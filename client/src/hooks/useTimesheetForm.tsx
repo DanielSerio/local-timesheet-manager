@@ -15,6 +15,7 @@ export function useTimesheetForm(
 
   useEffect(() => {
     if (defaultValues) {
+      console.info("form values", defaultValues);
       form.reset(defaultValues);
     }
   }, [defaultValues]);

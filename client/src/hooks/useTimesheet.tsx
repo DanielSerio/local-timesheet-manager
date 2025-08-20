@@ -1,3 +1,5 @@
+import type { TimesheetRow } from "@/components/table/TimesheetTable/TimesheetTable.props";
+import { TimesheetService } from "@/lib/services/timesheet.service";
 import type { TimesheetLineCreate } from "@/lib/types/timesheet-line.types";
 import type { Timesheet } from "@/lib/types/timesheet.types";
 import { useQuery } from "@tanstack/react-query";
@@ -36,29 +38,37 @@ export function useTimesheet(timesheetId?: number) {
     enabled: !!timesheetId,
     queryKey: ["timesheet", timesheetId],
     async queryFn() {
-      return await new Promise<Timesheet>((resolve) => {
-        if (timesheetId === -2) {
-          setTimeout(() => {
-            resolve({
-              id: -2,
-              name: "Test Timesheet",
-              date: new Date(),
-              lastUpdateAt: new Date(),
-              Lines: [],
-            });
-          }, 600);
-        } else {
-          setTimeout(() => {
-            resolve({
-              id: -1,
-              name: "Test Timesheet",
-              date: new Date("2025-08-12"),
-              lastUpdateAt: new Date(),
-              Lines: createLines(),
-            });
-          }, 600);
-        }
-      });
+      if (timesheetId === undefined) {
+        return;
+      }
+
+      if (timesheetId < 0) {
+        return await new Promise<Timesheet>((resolve) => {
+          if (timesheetId === -2) {
+            setTimeout(() => {
+              resolve({
+                id: -2,
+                name: "Test Timesheet",
+                date: new Date(),
+                lastUpdateAt: new Date(),
+                Lines: [],
+              });
+            }, 600);
+          } else {
+            setTimeout(() => {
+              resolve({
+                id: -1,
+                name: "Test Timesheet",
+                date: new Date("2025-08-12"),
+                lastUpdateAt: new Date(),
+                Lines: createLines() as Timesheet["Lines"],
+              });
+            }, 600);
+          }
+        });
+      }
+
+      return await TimesheetService.getTimesheet(timesheetId);
     },
   });
 }

@@ -9,6 +9,7 @@ import { useEntityList } from "@/hooks/useEntityList";
 import { COLUMNS } from "./columns";
 import { useTimesheetForm } from "@/hooks/useTimesheetForm";
 import { useTimesheet } from "@/hooks/useTimesheet";
+import type { Timesheet } from "@/lib/types/timesheet.types";
 
 export function calculateGridTemplateColumns(
   columns: TimesheetTableColumnDef<keyof TimesheetRow>[]
@@ -42,8 +43,13 @@ function useTimesheetTableState({
     offset: 0,
   });
   const timesheetQuery = useTimesheet(timesheetId);
+  const returnData = timesheetQuery.data;
 
-  const form = useTimesheetForm(timesheetQuery.data);
+  const timesheet = (returnData as unknown as Record<string, unknown>)?.data
+    ? (returnData as { data: Timesheet }).data
+    : returnData;
+
+  const form = useTimesheetForm(timesheet as Timesheet | undefined);
 
   useEffect(() => {
     if (typeof defaultIsReadOnly === "boolean") {

@@ -7,10 +7,11 @@ export const Route = createFileRoute("/timesheets/$entryDate/$timesheetId/")({
 });
 
 function RouteComponent() {
+  const { timesheetId } = Route.useParams();
   return (
     <Page>
       <PageHeader />
-      <TimesheetPage />
+      <TimesheetPage timesheetId={+timesheetId} />
     </Page>
   );
 }

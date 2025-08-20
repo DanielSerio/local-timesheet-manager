@@ -150,7 +150,7 @@ export class TimesheetsService {
       .select([
         'timesheet.id AS id',
         'timesheet.name AS name',
-        `COALESCE(SUM(unixepoch(concat('2025-01-07', ' ', line.endTime)) - unixepoch(concat('2025-01-07', ' ', line.endTime)) / 60), 0) AS "totalTime"`
+        `COALESCE(SUM((unixepoch(concat('2025-01-07', ' ', line.endTime)) - unixepoch(concat('2025-01-07', ' ', line.startTime))) / 60), 0) AS "totalTime"`
       ])
       .leftJoin('timesheet.Lines', 'line')
       .where('timesheet.date = :date', { date: finalDate })

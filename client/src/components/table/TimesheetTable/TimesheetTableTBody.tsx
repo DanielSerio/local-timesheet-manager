@@ -80,6 +80,8 @@ export function TimesheetTableTBody() {
     );
   }
 
+  console.info(timesheetQuery.data);
+
   return (
     <>
       {lines.length === 0 && !isCreateMode ? (

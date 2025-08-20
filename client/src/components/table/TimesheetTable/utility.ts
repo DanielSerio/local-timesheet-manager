@@ -49,7 +49,11 @@ function getDateFNSFormatString(format: DateFormat) {
  * @property options.format - The format to use. {@link DateFormat}
  * @returns The formatted date
  */
-export function formatDate(date: Date, { format }: FormatDateOptions = { format: 'date' }) {
+export function formatDate(date: Date | string, { format }: FormatDateOptions = { format: 'date' }) {
+  if (typeof date === 'string') {
+    date = new Date(Date.parse(date));
+  }
+
   const dateChunks = [
     date.getUTCFullYear(),
     date.getUTCMonth() + 1,

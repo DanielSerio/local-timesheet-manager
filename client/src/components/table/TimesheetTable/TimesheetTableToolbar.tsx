@@ -112,7 +112,7 @@ export function TimesheetTableToolbar() {
                 <span>-</span>
                 {!!values.date && (
                   <strong className="font-semibold text-gray-500">
-                    {formatDate(values.date as Date)}
+                    {formatDate(values.date as string)}
                   </strong>
                 )}
               </em>

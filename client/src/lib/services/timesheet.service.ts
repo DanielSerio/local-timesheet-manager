@@ -24,6 +24,10 @@ class TimesheetApiService extends ApiService {
     return await this.GET<Pretty<ListResponse<TimesheetListItem>>>(`/for-date?${params}`);
   }
 
+  async getTimesheet(timesheetId: number) {
+    return await this.GET<Pretty<Timesheet>>(`/${timesheetId}`);
+  }
+
   async createTimesheet(timesheet: TimesheetCreate) {
     return await this.POST<TimesheetCreate, Pretty<Timesheet>>(timesheet);
   }
