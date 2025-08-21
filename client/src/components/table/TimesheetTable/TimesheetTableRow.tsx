@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { Trash } from "lucide-react";
 import { Controller, type FieldError } from "react-hook-form";
 import type { TimesheetTableRowProps } from "./TimesheetTable.props";
@@ -21,9 +20,6 @@ export function TimesheetTableRow({
   control,
   remove,
 }: TimesheetTableRowProps) {
-  const startTimeRef = useRef<HTMLInputElement>(null);
-  const endTimeRef = useRef<HTMLInputElement>(null);
-
   if (isReadOnly) {
     return (
       <>
@@ -156,13 +152,14 @@ export function TimesheetTableRow({
             render={({ field }) => {
               return (
                 <TimeInput
-                  ref={startTimeRef}
                   value={field.value ?? ""}
                   onChange={field.onChange}
-                  onBlur={() => {
-                    if (startTimeRef && startTimeRef.current) {
-                      field.value = startTimeRef.current.value;
-                    }
+                  onBlur={(ev) => {
+                    field.onChange({
+                      target: {
+                        value: ev.target.value,
+                      },
+                    });
 
                     field.onBlur();
                   }}
@@ -178,13 +175,14 @@ export function TimesheetTableRow({
             render={({ field }) => {
               return (
                 <TimeInput
-                  ref={endTimeRef}
                   value={field.value ?? ""}
                   onChange={field.onChange}
-                  onBlur={() => {
-                    if (endTimeRef && endTimeRef.current) {
-                      field.value = endTimeRef.current.value;
-                    }
+                  onBlur={(ev) => {
+                    field.onChange({
+                      target: {
+                        value: ev.target.value,
+                      },
+                    });
 
                     field.onBlur();
                   }}

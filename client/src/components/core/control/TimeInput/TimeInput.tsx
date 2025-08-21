@@ -56,14 +56,23 @@ function TimeInputComponent(
     [onChange, setInputValue]
   );
 
-  const handleBlur = useCallback((ev: FocusEvent<HTMLInputElement>) => {
-    onChange(ev, {
-      textValue: roundValue(ev.target.valueAsDate) ?? ev.target.value,
-      parsed: parseTime(ev.target.valueAsDate),
-    });
-    setInputValue(roundValue(ev.target.valueAsDate));
-    onBlur?.(ev);
-  }, []);
+  const handleBlur = useCallback(
+    (ev: FocusEvent<HTMLInputElement>) => {
+      onChange(ev, {
+        textValue: roundValue(ev.target.valueAsDate) ?? ev.target.value,
+        parsed: parseTime(ev.target.valueAsDate),
+      });
+      setInputValue(roundValue(ev.target.valueAsDate));
+      onBlur?.({
+        ...ev,
+        target: {
+          ...ev.target,
+          value: roundValue(ev.target.valueAsDate) ?? "",
+        },
+      });
+    },
+    [value]
+  );
 
   return (
     <Input
