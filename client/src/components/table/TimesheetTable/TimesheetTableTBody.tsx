@@ -80,8 +80,6 @@ export function TimesheetTableTBody() {
     );
   }
 
-  console.info(timesheetQuery.data);
-
   return (
     <>
       {lines.length === 0 && !isCreateMode ? (
@@ -95,6 +93,7 @@ export function TimesheetTableTBody() {
               const errors = {
                 ...form.formState.errors.Lines?.[i],
               };
+
               return (
                 <TimesheetTableRow
                   key={line.id ?? `row:${i}`}

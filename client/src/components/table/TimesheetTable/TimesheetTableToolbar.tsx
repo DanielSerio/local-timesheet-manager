@@ -87,12 +87,10 @@ export function TimesheetTableToolbar() {
                   <>
                     <Input
                       type="date"
-                      value={
-                        (field.value as Date)?.toISOString?.().split?.("T")?.[0]
-                      }
+                      value={field.value as string}
                       onChange={field.onChange}
                       onBlur={field.onBlur}
-                      //disabled={!isCreateMode}
+                      disabled={!isCreateMode}
                     />
                     {!!fieldState.error?.message && (
                       <p className="text-destructive text-xs">

@@ -69,10 +69,11 @@ export function TimesheetTableRow({
         )}
         {errors &&
           Object.keys(errors).length > 0 &&
-          Object.values(errors).map((fieldError) => {
+          Object.entries(errors).map(([field, fieldError]) => {
             const err = fieldError as FieldError;
-            const message = err.message;
-            const key = message?.replace(/\s+/g, "_");
+            const message = err.message ?? `Invalid line`;
+            const key = field;
+
             return (
               <div
                 className="grid border-b border-destructive bg-destructive/10 text-destructive"
